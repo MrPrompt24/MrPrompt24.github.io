@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MrPrompt — Centrum Otwartych Innowacji</title>
 <meta name="description" content="MrPrompt Centrum Otwartych Innowacji — centrum aplikacji i narzędzi AI tworzonych w duchu Flow Coding, z linkami do repozytoriów GitHub.">
+<link rel="icon" type="image/png" href="images/favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,6 +121,46 @@
     background:
       radial-gradient(ellipse 60% 50% at 85% 15%, rgba(217,158,43,.10), transparent 60%),
       radial-gradient(ellipse 50% 40% at 10% 90%, rgba(217,158,43,.06), transparent 60%);
+  }
+
+  .hero__inner{
+    display:grid; grid-template-columns:1fr; gap:56px; align-items:center;
+    max-width:1360px; margin:0 auto; width:100%;
+  }
+  .hero__content{ display:flex; flex-direction:column; }
+
+  .hero__panel{
+    background:linear-gradient(165deg, var(--card), var(--bg-soft));
+    border:1px solid var(--card-border); border-radius:20px;
+    padding:22px 24px 28px;
+    opacity:0; animation:rise 1s var(--ease) .6s forwards;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .hero__panel-dots{ display:flex; gap:7px; margin-bottom:18px; }
+  .hero__panel-dots span{ width:11px; height:11px; border-radius:50%; background:var(--card-border); }
+  .hero__panel-dots span:nth-child(1){ background:#e5605a; }
+  .hero__panel-dots span:nth-child(2){ background:#e6b95a; }
+  .hero__panel-dots span:nth-child(3){ background:#5ac97a; }
+
+  .hero__panel-code{
+    font-family:var(--font-mono); font-size:12.5px; line-height:1.85; color:var(--text-muted);
+  }
+  .hero__panel-code .tok-key{ color:var(--amber-bright); }
+  .hero__panel-code .tok-str{ color:#9fd7a0; }
+  .hero__panel-code .tok-num{ color:#7fb8e0; }
+
+  .hero__panel-stats{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-top:24px;
+    padding-top:22px; border-top:1px solid var(--card-border);
+  }
+  .hero__panel-stats div{ text-align:center; }
+  .hero__panel-stats strong{
+    display:block; font-family:var(--font-display); font-size:1.5rem; color:var(--amber-bright);
+  }
+  .hero__panel-stats span{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.04em; }
+
+  @media (min-width:961px){
+    .hero__inner{ grid-template-columns:1.15fr .85fr; }
   }
 
   .hero__eyebrow{
@@ -261,6 +302,8 @@
   .card:hover{ transform:translateY(-4px); border-color:var(--amber-dim); background:var(--card-hover); }
   .card:hover::before{ transform:translateX(0); }
   .card.is-hidden{ display:none; }
+  .card{ cursor:pointer; }
+  .card:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
 
   .card__top{ display:flex; justify-content:space-between; align-items:center; }
   .card__icon{ font-size:26px; }
@@ -285,6 +328,42 @@
   .card:hover .card__link span{ transform:translateX(4px); color:var(--amber-bright); }
 
   .empty-state{ text-align:center; color:var(--text-faint); margin-top:40px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:2000;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    background:rgba(10,9,8,.75); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    opacity:0; visibility:hidden; transition:opacity .3s var(--ease), visibility 0s linear .3s;
+  }
+  .modal-overlay.is-open{ opacity:1; visibility:visible; transition:opacity .3s var(--ease); }
+
+  .modal{
+    width:100%; max-width:560px; max-height:85vh; overflow-y:auto;
+    background:var(--card); border:1px solid var(--card-border); border-radius:20px;
+    padding:36px; position:relative;
+    transform:translateY(24px) scale(.98); transition:transform .35s var(--ease);
+  }
+  .modal-overlay.is-open .modal{ transform:translateY(0) scale(1); }
+
+  .modal__close{
+    position:absolute; top:18px; right:18px; width:34px; height:34px; border-radius:50%;
+    background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text-muted);
+    display:grid; place-items:center; font-size:15px; transition:color .2s, border-color .2s;
+  }
+  .modal__close:hover{ color:var(--text); border-color:var(--amber); }
+
+  .modal__top{ display:flex; align-items:center; justify-content:space-between; padding-right:40px; }
+  .modal__icon{ font-size:34px; }
+  .modal h3{ font-size:1.6rem; margin-top:16px; }
+  .modal__tags{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+  .modal__tags span{
+    font-family:var(--font-mono); font-size:11px; color:var(--amber-bright);
+    background:rgba(217,158,43,.08); padding:4px 10px; border-radius:6px;
+  }
+  .modal__desc{ color:var(--text-muted); line-height:1.75; margin-bottom:26px; }
+  .modal .btn{ width:fit-content; }
 
   /* ===== CONTACT ===== */
   .contact{
@@ -352,7 +431,7 @@
     <a href="#kontakt">Kontakt</a>
   </nav>
 
-  <a class="nav__cta" href="https://github.com/mrprompt-eu" target="_blank" rel="noopener">
+  <a class="nav__cta" href="https://mrprompt24.github.io/" target="_blank" rel="noopener">
     <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
     <span>GitHub</span>
   </a>
@@ -366,41 +445,62 @@
 
   <!-- ===== HERO ===== -->
   <section class="hero">
-    <div class="hero__eyebrow"><span class="dot"></span> Open Knowledge&nbsp;•&nbsp;Free Tools&nbsp;•&nbsp;Flow Coding</div>
+    <div class="hero__inner">
+      <div class="hero__content">
+        <div class="hero__eyebrow"><span class="dot"></span> Open Knowledge&nbsp;•&nbsp;Free Tools&nbsp;•&nbsp;Flow Coding</div>
 
-    <h1 class="hero__title">
-      Buduję otwarte narzędzia AI,<br>
-      <span class="hero__title-accent">dostępne dla każdego.</span>
-    </h1>
+        <h1 class="hero__title">
+          Buduję otwarte narzędzia,<br>
+          <span class="hero__title-accent">dostępne dla każdego.</span>
+        </h1>
 
-    <p class="hero__lede">
-      To centrum aplikacji, które tworzę metodą <strong>Flow Coding</strong> — w dialogu
-      z AI, ale zawsze z człowiekiem u steru. Każdy projekt linkuje wprost do swojego
-      repozytorium na GitHubie. Bierz, testuj, forkuj.
-    </p>
+        <p class="hero__lede">
+          To centrum aplikacji, które tworzę metodą <strong>Flow Coding</strong> — w dialogu
+          z AI, ale zawsze z człowiekiem u steru. Każdy projekt linkuje wprost do swojego
+          repozytorium na GitHubie. Bierz, testuj, forkuj.
+        </p>
 
-    <div class="hero__actions">
-      <a href="#projekty" class="btn btn--primary">Zobacz projekty</a>
-      <a href="https://mrprompt.eu" target="_blank" rel="noopener" class="btn btn--ghost">mrprompt.eu ↗</a>
+        <div class="hero__actions">
+          <a href="#projekty" class="btn btn--primary">Zobacz projekty</a>
+          <a href="https://mrprompt.eu" target="_blank" rel="noopener" class="btn btn--ghost">mrprompt.eu ↗</a>
+        </div>
+
+        <svg class="flow-signature" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="flowGradient" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#d99e2b" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#f2b544" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#d99e2b" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path id="flowPath" d="M0,60 C150,10 250,110 400,60 C550,10 650,110 800,60 C950,10 1050,110 1200,60"/>
+          <circle id="flowDot" r="4"/>
+        </svg>
+      </div>
+
+      <aside class="hero__panel" aria-hidden="true">
+        <div class="hero__panel-dots"><span></span><span></span><span></span></div>
+        <div class="hero__panel-code">
+          <div><span class="tok-key">const</span> mrprompt = {</div>
+          <div>&nbsp;&nbsp;metoda: <span class="tok-str">"Flow Coding"</span>,</div>
+          <div>&nbsp;&nbsp;projekty: <span class="tok-num">9</span>,</div>
+          <div>&nbsp;&nbsp;licencja: <span class="tok-str">"open source"</span>,</div>
+          <div>&nbsp;&nbsp;cel: <span class="tok-str">"edukacja i inkluzja"</span></div>
+          <div>};</div>
+        </div>
+        <div class="hero__panel-stats">
+          <div><strong>9</strong><span>Projektów</span></div>
+          <div><strong>100%</strong><span>Open Source</span></div>
+          <div><strong>3+</strong><span>Technologie</span></div>
+        </div>
+      </aside>
     </div>
-
-    <svg class="flow-signature" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="flowGradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#d99e2b" stop-opacity="0"/>
-          <stop offset="50%" stop-color="#f2b544" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#d99e2b" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <path id="flowPath" d="M0,60 C150,10 250,110 400,60 C550,10 650,110 800,60 C950,10 1050,110 1200,60"/>
-      <circle id="flowDot" r="4"/>
-    </svg>
   </section>
 
   <!-- ===== O MNIE ===== -->
   <section class="about reveal" id="o-mnie">
     <div class="about__media">
-      <img src="https://mrprompt.eu/images/slawek.png" alt="Sławek Radliński — MrPrompt" loading="lazy"
+      <img src="images/mr_prompt.png" alt="Sławek Radliński — MrPrompt" loading="lazy"
            onerror="this.parentElement.classList.add('about__media--fallback')">
     </div>
 
@@ -436,72 +536,120 @@
     <p class="section-eyebrow section-eyebrow--center">02 — Centrum aplikacji</p>
     <h2 class="section-title">Moje projekty na GitHubie</h2>
     <p class="section-sub">
-      Poniżej przykładowy układ centrum — podmień karty na własne repozytoria,
-      struktura i filtrowanie zostaną bez zmian.
+      Wszystkie poniższe aplikacje są otwarte i dostępne na moim GitHubie —
+      kliknij kartę, aby zobaczyć pełny opis, albo przejdź prosto do repozytorium.
     </p>
 
     <div class="filters" id="filters">
       <button class="filter is-active" data-filter="all">Wszystkie</button>
-      <button class="filter" data-filter="ai">AI</button>
+      <button class="filter" data-filter="zdrowie">Zdrowie</button>
+      <button class="filter" data-filter="produktywnosc">Produktywność</button>
       <button class="filter" data-filter="edukacja">Edukacja</button>
-      <button class="filter" data-filter="web">Web</button>
       <button class="filter" data-filter="narzedzia">Narzędzia</button>
     </div>
 
     <div class="grid" id="projectGrid">
 
-      <article class="card reveal" data-tags="ai edukacja">
-        <div class="card__top"><span class="card__icon">🧭</span><span class="card__status">aktywny</span></div>
-        <h3>FlowMapper</h3>
-        <p>Wizualny mapper ścieżki nauki — notatki, etapy, eksport stanu w metodzie Learning Flow Mapping.</p>
-        <div class="card__tags"><span>JavaScript</span><span>D3.js</span><span>PWA</span></div>
-        <a href="https://github.com/mrprompt-eu/flowmapper" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+      <article class="card reveal" data-tags="zdrowie" tabindex="0" data-title="AntyStres" data-icon="🧘" data-status="aktywny" data-chips="JavaScript,PWA,Audio" data-link="https://github.com/MrPrompt24/AntyStres">
+        <div class="card__top"><span class="card__icon">🧘</span><span class="card__status">aktywny</span></div>
+        <h3>AntyStres</h3>
+        <p>Aplikacja antystresowa z technikami oddechowymi, medytacją z przewodnikiem i dźwiękami natury.</p>
+        <div class="card__tags"><span>JavaScript</span><span>PWA</span><span>Audio</span></div>
+        <a href="https://github.com/MrPrompt24/AntyStres" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Odkryj spokój z aplikacją antystresową. Znajdziesz tu kojące techniki oddechowe, sesje medytacji z przewodnikiem oraz dźwięki natury, które pomogą Ci wyciszyć umysł w dowolnym miejscu. Śledź swój nastrój, redukuj napięcie i buduj zdrowe nawyki relaksacyjne każdego dnia — Twój osobisty azyl spokoju jest już w Twoim telefonie.</p>
       </article>
 
-      <article class="card reveal" data-tags="ai narzedzia">
-        <div class="card__top"><span class="card__icon">🔮</span><span class="card__status">aktywny</span></div>
-        <h3>PromptForge</h3>
-        <p>Biblioteka i generator sprawdzonych struktur promptów dla realnych celów edukacyjnych i biznesowych.</p>
-        <div class="card__tags"><span>Python</span><span>OpenAI&nbsp;API</span><span>CLI</span></div>
-        <a href="https://github.com/mrprompt-eu/promptforge" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
-      </article>
-
-      <article class="card reveal" data-tags="edukacja web">
-        <div class="card__top"><span class="card__icon">🎓</span><span class="card__status">w&nbsp;rozwoju</span></div>
-        <h3>EduSpark AI</h3>
-        <p>Otwarta platforma ćwiczeń i mikro-projektów dla uczniów — niska bariera wejścia, wysoka dostępność.</p>
-        <div class="card__tags"><span>React</span><span>Node.js</span><span>Supabase</span></div>
-        <a href="https://github.com/mrprompt-eu/eduspark-ai" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
-      </article>
-
-      <article class="card reveal" data-tags="narzedzia web">
+      <article class="card reveal" data-tags="zdrowie" tabindex="0" data-title="AquaMotiv" data-icon="💧" data-status="aktywny" data-chips="JavaScript,IndexedDB,PWA" data-link="https://github.com/MrPrompt24/AquaMotiv">
         <div class="card__top"><span class="card__icon">💧</span><span class="card__status">aktywny</span></div>
         <h3>AquaMotiv</h3>
-        <p>Monitorowanie nawodnienia i zużycia filtra butelki — proste statystyki i motywacja dnia codziennego.</p>
-        <div class="card__tags"><span>Vue</span><span>IndexedDB</span><span>PWA</span></div>
-        <a href="https://github.com/mrprompt-eu/aquamotiv" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p>Monitorowanie nawodnienia i zużycia filtra do wody — proste statystyki i motywacja dnia codziennego.</p>
+        <div class="card__tags"><span>JavaScript</span><span>IndexedDB</span><span>PWA</span></div>
+        <a href="https://github.com/MrPrompt24/AquaMotiv" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Proste narzędzie, które pomaga monitorować zużycie wody przefiltrowanej przez butelkę filtrującą oraz śledzić dzienne nawodnienie. Liczy napełnienia filtra, przypomina o zbliżającej się wymianie, pozwala spersonalizować pojemność filtra i butelki, daje porady dotyczące nawodnienia i nagradza za osiągnięcie dziennego limitu motywacyjnymi komunikatami. Wszystkie dane zapisywane są lokalnie w przeglądarce — nikt poza Tobą ich nie widzi.</p>
       </article>
 
-      <article class="card reveal" data-tags="narzedzia">
+      <article class="card reveal" data-tags="narzedzia" tabindex="0" data-title="BudgetApp" data-icon="💰" data-status="aktywny" data-chips="PHP,SQLite,PWA" data-link="https://github.com/MrPrompt24/BudgetApp/">
+        <div class="card__top"><span class="card__icon">💰</span><span class="card__status">aktywny</span></div>
+        <h3>BudgetApp</h3>
+        <p>Zarządzanie budżetem miesięcznym z automatycznym wykrywaniem polskich świąt i dni roboczych.</p>
+        <div class="card__tags"><span>PHP</span><span>SQLite</span><span>PWA</span></div>
+        <a href="https://github.com/MrPrompt24/BudgetApp/" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Aplikacja mobilna do zarządzania budżetem miesięcznym z obsługą polskich świąt. Budżet liczony jest z odliczaniem dni roboczych, z automatycznym wykrywaniem świąt ruchomych i stałych oraz opcją pomijania niedziel. Dodatkowo umożliwia dodawanie wydatków, prowadzenie wielu list zakupów, zapisywanie notatek i zmianę ustawień waluty. Działa na bazie SQLite — bez konfiguracji MySQL, gotowa pod PWA.</p>
+      </article>
+
+      <article class="card reveal" data-tags="produktywnosc" tabindex="0" data-title="FocusFlow" data-icon="🍅" data-status="aktywny" data-chips="HTML,JavaScript,LocalFirst" data-link="https://github.com/MrPrompt24/FocusFlow">
         <div class="card__top"><span class="card__icon">🍅</span><span class="card__status">aktywny</span></div>
         <h3>FocusFlow</h3>
         <p>Produktywność w rytmie Pomodoro — timer, zadania, dziennik i statystyki w jednym narzędziu.</p>
-        <div class="card__tags"><span>TypeScript</span><span>Vite</span><span>LocalFirst</span></div>
-        <a href="https://github.com/mrprompt-eu/focusflow" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <div class="card__tags"><span>HTML</span><span>JavaScript</span><span>LocalFirst</span></div>
+        <a href="https://github.com/MrPrompt24/FocusFlow" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Prosta, intuicyjna aplikacja zaprojektowana, aby pomóc zwiększyć produktywność i poprawić koncentrację dzięki technice Pomodoro. Oferuje elastyczny timer pracy i przerw, zarządzanie i priorytetyzację zadań, dziennik produktywności do zapisywania refleksji, relaksujące dźwięki ambientowe ograniczające rozpraszacze oraz statystyki z eksportem i importem danych.</p>
       </article>
 
-      <article class="card reveal" data-tags="ai web">
-        <div class="card__top"><span class="card__icon">📜</span><span class="card__status">w&nbsp;rozwoju</span></div>
-        <h3>Regulamin Auditor</h3>
-        <p>Analizator regulaminów: ryzyka, zgodność z RODO, klauzule abuzywne i rekomendacje bezpieczeństwa.</p>
-        <div class="card__tags"><span>Python</span><span>NLP</span><span>FastAPI</span></div>
-        <a href="https://github.com/mrprompt-eu/regulamin-auditor" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+      <article class="card reveal" data-tags="zdrowie narzedzia" tabindex="0" data-title="HELPio" data-icon="🆘" data-status="aktywny" data-chips="HTML,Geolokalizacja,PWA" data-link="https://github.com/MrPrompt24/HELPio">
+        <div class="card__top"><span class="card__icon">🆘</span><span class="card__status">aktywny</span></div>
+        <h3>HELPio</h3>
+        <p>Aplikacja bezpieczeństwa — funkcje alarmowe, lokalizacyjne i komunikacyjne w sytuacjach awaryjnych.</p>
+        <div class="card__tags"><span>HTML</span><span>Geolokalizacja</span><span>PWA</span></div>
+        <a href="https://github.com/MrPrompt24/HELPio" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>HELPio została stworzona z myślą o zapewnieniu maksymalnego bezpieczeństwa użytkownikom w sytuacjach awaryjnych. Aplikacja łączy w sobie funkcje alarmowe, lokalizacyjne i komunikacyjne, aby w krytycznym momencie zapewnić szybką i skuteczną pomoc. To projekt, wokół którego rozwijana jest inicjatywa HELPio.</p>
+      </article>
+
+      <article class="card reveal" data-tags="narzedzia" tabindex="0" data-title="PlanerTrasGPX" data-icon="🗺️" data-status="aktywny" data-chips="JavaScript,GPX,Mapy" data-link="https://github.com/MrPrompt24/PlanerTrasGPX">
+        <div class="card__top"><span class="card__icon">🗺️</span><span class="card__status">aktywny</span></div>
+        <h3>PlanerTrasGPX</h3>
+        <p>Planowanie wycieczek pieszych, rowerowych i samochodowych z eksportem tras do plików GPX.</p>
+        <div class="card__tags"><span>JavaScript</span><span>GPX</span><span>Mapy</span></div>
+        <a href="https://github.com/MrPrompt24/PlanerTrasGPX" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Narzędzie do planowania tras — pieszych, rowerowych i samochodowych — z możliwością eksportu wyznaczonej trasy do pliku GPX, gotowego do wgrania na urządzenie nawigacyjne lub w ulubioną aplikację turystyczną.</p>
+      </article>
+
+      <article class="card reveal" data-tags="narzedzia" tabindex="0" data-title="ShoppingMaster" data-icon="🛒" data-status="aktywny" data-chips="PHP,PWA" data-link="https://github.com/MrPrompt24/ShoppingMaster">
+        <div class="card__top"><span class="card__icon">🛒</span><span class="card__status">aktywny</span></div>
+        <h3>ShoppingMaster</h3>
+        <p>Inteligentna lista zakupów jako progresywna aplikacja webowa (PWA) — szybka i działająca offline.</p>
+        <div class="card__tags"><span>PHP</span><span>PWA</span></div>
+        <a href="https://github.com/MrPrompt24/ShoppingMaster" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Shopping Master to progresywna aplikacja webowa (PWA) do prowadzenia listy zakupów — instaluje się jak natywna aplikacja na telefonie, działa w trybie standalone i pozwala szybko dodawać, odhaczać i organizować produkty bez zbędnych rozpraszaczy.</p>
+      </article>
+
+      <article class="card reveal" data-tags="edukacja" tabindex="0" data-title="ShortChallenge" data-icon="⚡" data-status="aktywny" data-chips="HTML,JavaScript,Quiz" data-link="https://github.com/MrPrompt24/ShortChallenge">
+        <div class="card__top"><span class="card__icon">⚡</span><span class="card__status">aktywny</span></div>
+        <h3>ShortChallenge</h3>
+        <p>Krótkie, interaktywne wyzwania edukacyjne — quizy, prawda/fałsz, dopasowanie i sortowanie.</p>
+        <div class="card__tags"><span>HTML</span><span>JavaScript</span><span>Quiz</span></div>
+        <a href="https://github.com/MrPrompt24/ShortChallenge" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Mobilna aplikacja z krótkimi, wciągającymi wyzwaniami edukacyjnymi w formacie mini-gier: szybkie quizy, prawda/fałsz, uzupełnianie luk, łączenie w pary, sortowanie i mini-debaty. Zbudowana wokół mechaniki serii (streak), która motywuje do codziennej nauki w małych, przystępnych dawkach.</p>
+      </article>
+
+      <article class="card reveal" data-tags="narzedzia" tabindex="0" data-title="WidgetPogoda" data-icon="☀️" data-status="aktywny" data-chips="HTML,OpenWeatherMap API,Widget" data-link="https://github.com/MrPrompt24/WidgetPogoda">
+        <div class="card__top"><span class="card__icon">☀️</span><span class="card__status">aktywny</span></div>
+        <h3>WidgetPogoda</h3>
+        <p>Widżet pogodowy z aktualizacją danych w czasie rzeczywistym i integracją z OpenWeatherMap.</p>
+        <div class="card__tags"><span>HTML</span><span>OpenWeatherMap&nbsp;API</span><span>Widget</span></div>
+        <a href="https://github.com/MrPrompt24/WidgetPogoda" target="_blank" rel="noopener" class="card__link">Repozytorium <span>→</span></a>
+        <p class="card__full" hidden>Lekki widżet pogodowy, który po podłączeniu klucza API z OpenWeatherMap pokazuje aktualne dane pogodowe. Widżet aktualizuje czas co sekundę, dane pogodowe co 10 minut, a dane aktywności co 5 minut, tworząc żywy i funkcjonalny element interfejsu.</p>
       </article>
 
     </div>
 
     <p class="empty-state" id="emptyState" hidden>Brak projektów w tej kategorii — na razie.</p>
   </section>
+
+  <!-- ===== MODAL PROJEKTU ===== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" id="modalClose" aria-label="Zamknij">✕</button>
+      <div class="modal__top">
+        <span class="modal__icon" id="modalIcon"></span>
+        <span class="card__status" id="modalStatus"></span>
+      </div>
+      <h3 id="modalTitle"></h3>
+      <div class="modal__tags" id="modalTags"></div>
+      <p class="modal__desc" id="modalDesc"></p>
+      <a id="modalLink" class="btn btn--primary" target="_blank" rel="noopener">Zobacz na GitHub <span>↗</span></a>
+    </div>
+  </div>
 
   <!-- ===== KONTAKT ===== -->
   <section class="contact reveal" id="kontakt">
@@ -512,7 +660,7 @@
       <div class="contact__links">
         <a href="https://mrprompt.eu/#kontakt" target="_blank" rel="noopener">Formularz kontaktowy ↗</a>
         <a href="https://www.linkedin.com/in/mrprompt" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="https://github.com/mrprompt-eu" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://mrprompt24.github.io/" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="https://mrprompt.eu/blog" target="_blank" rel="noopener">Blog ↗</a>
       </div>
     </div>
@@ -581,6 +729,58 @@
 
       emptyState.hidden = visibleCount !== 0;
     });
+  });
+
+  // Modal projektu — pełny opis po kliknięciu karty
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalIcon = document.getElementById('modalIcon');
+  const modalStatus = document.getElementById('modalStatus');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalTags = document.getElementById('modalTags');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalLink = document.getElementById('modalLink');
+  const modalClose = document.getElementById('modalClose');
+  let lastFocused = null;
+
+  function openModal(card) {
+    modalIcon.textContent = card.dataset.icon || '';
+    modalStatus.textContent = card.dataset.status || '';
+    modalTitle.textContent = card.dataset.title || '';
+    modalTags.innerHTML = (card.dataset.chips || '').split(',').filter(Boolean)
+      .map(chip => `<span>${chip.trim()}</span>`).join('');
+    const fullDesc = card.querySelector('.card__full');
+    modalDesc.textContent = fullDesc ? fullDesc.textContent.trim() : '';
+    modalLink.href = card.dataset.link || '#';
+
+    lastFocused = document.activeElement;
+    modalOverlay.classList.add('is-open');
+    modalClose.focus();
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove('is-open');
+    if (lastFocused) lastFocused.focus();
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.card__link')) return;
+      openModal(card);
+    });
+    card.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('.card__link')) {
+        e.preventDefault();
+        openModal(card);
+      }
+    });
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('is-open')) closeModal();
   });
 
   // Animacja kropki na linii "flow"
